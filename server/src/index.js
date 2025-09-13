@@ -1,9 +1,14 @@
 const express = require('express');
+const { router: authRouter } = require('./auth');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
+
+// Authentication routes
+app.use('/api', authRouter);
 
 // Health check route
 app.get('/ping', (req, res) => {

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import HomePage from './HomePage';
 import PaymentForm from './PaymentForm';
 import Register from './Register';
@@ -10,13 +11,53 @@ function App() {
   const renderContent = () => {
     switch (currentView) {
       case 'register':
-        return <Register />;
+        return (
+          <motion.div
+            key="register"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Register />
+          </motion.div>
+        );
       case 'login':
-        return <Login />;
+        return (
+          <motion.div
+            key="login"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Login />
+          </motion.div>
+        );
       case 'payment':
-        return <PaymentForm />;
+        return (
+          <motion.div
+            key="payment"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <PaymentForm />
+          </motion.div>
+        );
       default:
-        return <HomePage />;
+        return (
+          <motion.div
+            key="home"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <HomePage />
+          </motion.div>
+        );
     }
   };
 
@@ -30,8 +71,11 @@ function App() {
         marginBottom: '20px'
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', gap: '15px' }}>
-          <button
+          <motion.button
             onClick={() => setCurrentView('home')}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2 }}
             style={{
               padding: '8px 16px',
               backgroundColor: currentView === 'home' ? '#007bff' : '#6c757d',
@@ -42,9 +86,12 @@ function App() {
             }}
           >
             Home
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             onClick={() => setCurrentView('register')}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2 }}
             style={{
               padding: '8px 16px',
               backgroundColor: currentView === 'register' ? '#007bff' : '#6c757d',
@@ -55,9 +102,12 @@ function App() {
             }}
           >
             Register
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             onClick={() => setCurrentView('login')}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2 }}
             style={{
               padding: '8px 16px',
               backgroundColor: currentView === 'login' ? '#28a745' : '#6c757d',
@@ -68,9 +118,12 @@ function App() {
             }}
           >
             Login
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             onClick={() => setCurrentView('payment')}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2 }}
             style={{
               padding: '8px 16px',
               backgroundColor: currentView === 'payment' ? '#ffc107' : '#6c757d',
@@ -81,13 +134,14 @@ function App() {
             }}
           >
             Payment
-          </button>
+          </motion.button>
         </div>
       </nav>
-
       {/* Main Content */}
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
-        {renderContent()}
+        <AnimatePresence mode="wait">
+          {renderContent()}
+        </AnimatePresence>
       </div>
     </div>
   );
